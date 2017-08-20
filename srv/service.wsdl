@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="service"
+  targetNamespace="http://localhost:8089/service.wsdl"
+  xmlns:tns="http://localhost:8089/service.wsdl"
+  xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+  xmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns="http://localhost:8089/service.wsdl"
+  xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap12/"
+  xmlns:HTTP="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+  xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+  xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+  <schema targetNamespace="http://localhost:8089/service.wsdl"
+    xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:SOAP-ENC="http://www.w3.org/2003/05/soap-encoding"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns="http://localhost:8089/service.wsdl"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="unqualified"
+    attributeFormDefault="unqualified">
+    <import namespace="http://www.w3.org/2003/05/soap-encoding"/>
+    <complexType name="TempleFiles"><!-- ns__TempleFiles -->
+          <sequence>
+            <element name="image" type="SOAP-ENC:base64" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__TempleFiles::image -->
+            <element name="image2" type="SOAP-ENC:base64" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__TempleFiles::image2 -->
+            <element name="image3" type="SOAP-ENC:base64" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__TempleFiles::image3 -->
+            <element name="matchTemPlate" type="SOAP-ENC:base64" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__TempleFiles::matchTemPlate -->
+            <element name="tplgray" type="SOAP-ENC:base64" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__TempleFiles::tplgray -->
+          </sequence>
+    </complexType>
+    <complexType name="TempleMatchPARA"><!-- ns__TempleMatchPARA -->
+          <sequence>
+            <element name="imggray" type="SOAP-ENC:base64" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__TempleMatchPARA::imggray -->
+            <element name="widthImg" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__TempleMatchPARA::widthImg -->
+            <element name="heightImg" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__TempleMatchPARA::heightImg -->
+          </sequence>
+    </complexType>
+    <complexType name="CCalibrationXYZNewPARA"><!-- ns__CCalibrationXYZNewPARA -->
+          <sequence>
+            <element name="srcTriX" type="ns:Array20Offloat" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__CCalibrationXYZNewPARA::srcTriX -->
+            <element name="srcTriY" type="ns:Array20Offloat" minOccurs="1" maxOccurs="1" nillable="true"/><!-- ns__CCalibrationXYZNewPARA::srcTriY -->
+            <element name="number" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__CCalibrationXYZNewPARA::number -->
+          </sequence>
+    </complexType>
+    <complexType name="Array20Offloat">
+      <complexContent>
+        <restriction base="SOAP-ENC:Array">
+          <element name="item" type="xsd:float" minOccurs="0" maxOccurs="20"/>
+        </restriction>
+      </complexContent>
+    </complexType>
+  </schema>
+
+</types>
+
+<message name="getFileServiceRequest">
+  <part name="in" type="ns:TempleFiles"/><!-- ns__getFileService::in -->
+</message>
+
+<message name="getFileServiceResponse">
+  <part name="result" type="xsd:int"/><!-- ns__getFileService::result -->
+</message>
+
+<message name="TempleMatchService">
+  <part name="inPara" type="ns:TempleMatchPARA"/><!-- ns__TempleMatchService::inPara -->
+</message>
+
+<message name="TempleMatchOUT">
+  <part name="fcosts" type="ns:Array20Offloat"/><!-- ns__TempleMatchService::fcosts -->
+  <part name="fCenterCoordsX" type="ns:Array20Offloat"/><!-- ns__TempleMatchService::fCenterCoordsX -->
+  <part name="fCenterCoordsY" type="ns:Array20Offloat"/><!-- ns__TempleMatchService::fCenterCoordsY -->
+  <part name="fangles" type="ns:Array20Offloat"/><!-- ns__TempleMatchService::fangles -->
+  <part name="ftempScales" type="ns:Array20Offloat"/><!-- ns__TempleMatchService::ftempScales -->
+  <part name="ioutNumber" type="xsd:int"/><!-- ns__TempleMatchService::ioutNumber -->
+</message>
+
+<message name="getCCalibrationXYZFileRequest">
+  <part name="inFile" type="SOAP-ENC:base64"/><!-- ns__getCCalibrationXYZFile::inFile -->
+</message>
+
+<message name="getCCalibrationXYZFileResponse">
+  <part name="result" type="xsd:int"/><!-- ns__getCCalibrationXYZFile::result -->
+</message>
+
+<message name="CCalibrationXYZNewService">
+  <part name="inPara" type="ns:CCalibrationXYZNewPARA"/><!-- ns__CCalibrationXYZNewService::inPara -->
+</message>
+
+<message name="CCalibrationXYZNewOUT">
+  <part name="CalibrationX" type="ns:Array20Offloat"/><!-- ns__CCalibrationXYZNewService::CalibrationX -->
+  <part name="CalibrationY" type="ns:Array20Offloat"/><!-- ns__CCalibrationXYZNewService::CalibrationY -->
+</message>
+
+<portType name="servicePortType">
+  <operation name="getFileService">
+    <documentation>Service definition of function ns__getFileService</documentation>
+    <input message="tns:getFileServiceRequest"/>
+    <output message="tns:getFileServiceResponse"/>
+  </operation>
+  <operation name="TempleMatchService">
+    <documentation>Service definition of function ns__TempleMatchService</documentation>
+    <input message="tns:TempleMatchService"/>
+    <output message="tns:TempleMatchOUT"/>
+  </operation>
+  <operation name="getCCalibrationXYZFile">
+    <documentation>Service definition of function ns__getCCalibrationXYZFile</documentation>
+    <input message="tns:getCCalibrationXYZFileRequest"/>
+    <output message="tns:getCCalibrationXYZFileResponse"/>
+  </operation>
+  <operation name="CCalibrationXYZNewService">
+    <documentation>Service definition of function ns__CCalibrationXYZNewService</documentation>
+    <input message="tns:CCalibrationXYZNewService"/>
+    <output message="tns:CCalibrationXYZNewOUT"/>
+  </operation>
+</portType>
+
+<binding name="service" type="tns:servicePortType">
+  <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="getFileService">
+    <SOAP:operation style="rpc"/>
+    <input>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </output>
+  </operation>
+  <operation name="TempleMatchService">
+    <SOAP:operation style="rpc"/>
+    <input>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </output>
+  </operation>
+  <operation name="getCCalibrationXYZFile">
+    <SOAP:operation style="rpc"/>
+    <input>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </output>
+  </operation>
+  <operation name="CCalibrationXYZNewService">
+    <SOAP:operation style="rpc"/>
+    <input>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" namespace="http://localhost:8089/service.wsdl" encodingStyle="http://www.w3.org/2003/05/soap-encoding"/>
+    </output>
+  </operation>
+</binding>
+
+<service name="service">
+  <documentation>gSOAP 2.8.34 generated service definition</documentation>
+  <port name="service" binding="tns:service">
+    <SOAP:address location="http://localhost:80"/>
+  </port>
+</service>
+
+</definitions>
