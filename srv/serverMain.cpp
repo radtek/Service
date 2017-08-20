@@ -24,11 +24,11 @@ static bool WriteFile(BYTE* _ptr,int _size,const char* _filePath){
 }
 
 int serviceService::getFileService(struct ns__TempleFiles in, int &result){
-	if (WriteFile(in.image.__ptr, in.image.__size, "./new/0.bmp")&&
-		WriteFile(in.image2.__ptr, in.image2.__size, "./new/1.bmp") &&
-		WriteFile(in.image3.__ptr, in.image3.__size, "./new/2.bmp") &&
-		WriteFile(in.matchTemPlate.__ptr, in.matchTemPlate.__size, "./new/matchTemPlate.xml") &&
-		WriteFile(in.tplgray.__ptr, in.tplgray.__size, "./new/tplgray.jpg"))
+	if (WriteFile(in.image.__ptr, in.image.__size, "./ReceiveFile/0.bmp")&&
+		WriteFile(in.image2.__ptr, in.image2.__size, "./ReceiveFile/1.bmp") &&
+		WriteFile(in.image3.__ptr, in.image3.__size, "./ReceiveFile/2.bmp") &&
+		WriteFile(in.matchTemPlate.__ptr, in.matchTemPlate.__size, "./ReceiveFile/matchTemPlate.xml") &&
+		WriteFile(in.tplgray.__ptr, in.tplgray.__size, "./ReceiveFile/tplgray.jpg"))
 	{
 		result = 10086;
 	}
@@ -45,7 +45,7 @@ int serviceService::TempleMatchService(struct ns__TempleMatchPARA inPara, struct
 	int outNumber = 0;
 	time_t start = clock();
 
-	TempleMatch("./new",
+	TempleMatch("./ReceiveFile",
 		inPara.imggray.__ptr,
 		inPara.widthImg,
 		inPara.heightImg,
@@ -73,7 +73,7 @@ int serviceService::TempleMatchService(struct ns__TempleMatchPARA inPara, struct
 
 
 int serviceService::getCCalibrationXYZFile(struct SOAP_ENC__base64 inFile, int &result){
-	if (WriteFile(inFile.__ptr, inFile.__size, "./new/Affine.xml")){
+	if (WriteFile(inFile.__ptr, inFile.__size, "./ReceiveFile/Affine.xml")){
 		result = 10086;
 	}
 	else result = 10010;
@@ -82,7 +82,7 @@ int serviceService::getCCalibrationXYZFile(struct SOAP_ENC__base64 inFile, int &
 
 int serviceService::CCalibrationXYZNewService(struct ns__CCalibrationXYZNewPARA inPara, struct ns__CCalibrationXYZNewOUT &outPara){
 	try{
-		CCalibrationXYZNew("./new/Affine.xml", inPara.srcTriX, inPara.srcTriY, inPara.number, outPara.CalibrationX, outPara.CalibrationY);
+		CCalibrationXYZNew("./ReceiveFile/Affine.xml", inPara.srcTriX, inPara.srcTriY, inPara.number, outPara.CalibrationX, outPara.CalibrationY);
 		return SOAP_OK;
 	}
 	catch(...) {

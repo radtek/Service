@@ -15,7 +15,7 @@ void sendFile(const char* endpoint, int& outResult){
 	ns__TempleFiles _inPutFile;
 
 	fstream img;
-	img.open("./test3/0.bmp", std::ios::in | ios::binary);
+	img.open("./config/0.bmp", std::ios::in | ios::binary);
 	img.seekg(0, std::ios_base::end);
 	int imgsize = img.tellg();
 	img.seekg(0, std::ios_base::beg);
@@ -25,7 +25,7 @@ void sendFile(const char* endpoint, int& outResult){
 	img.close();
 
 	fstream img1;
-	img1.open("./test3/1.bmp", std::ios::in|ios::binary);
+	img1.open("./config/1.bmp", std::ios::in|ios::binary);
 	img1.seekg(0, std::ios_base::end);
 	int img1size = img1.tellg();
 	img1.seekg(0, std::ios_base::beg);
@@ -35,7 +35,7 @@ void sendFile(const char* endpoint, int& outResult){
 	img1.close();
 
 	fstream img2;
-	img2.open("./test3/2.bmp", std::ios::in | ios::binary);
+	img2.open("./config/2.bmp", std::ios::in | ios::binary);
 	img2.seekg(0, std::ios_base::end);
 	int img2size = img2.tellg();
 	img2.seekg(0, std::ios_base::beg);
@@ -45,7 +45,7 @@ void sendFile(const char* endpoint, int& outResult){
 	img2.close();
 
 	fstream matchTemPlate;
-	matchTemPlate.open("./test3/matchTemPlate.xml", std::ios::in | ios::binary);
+	matchTemPlate.open("./config/matchTemPlate.xml", std::ios::in | ios::binary);
 	matchTemPlate.seekg(0, std::ios_base::end);
 	int matchTemPlateSize = matchTemPlate.tellg();
 	matchTemPlate.seekg(0, std::ios_base::beg);
@@ -55,7 +55,7 @@ void sendFile(const char* endpoint, int& outResult){
 	matchTemPlate.close();
 
 	fstream tplgray;
-	tplgray.open("./test3/tplgray.jpg", std::ios::in | ios::binary);
+	tplgray.open("./config/tplgray.jpg", std::ios::in | ios::binary);
 	tplgray.seekg(0, std::ios_base::end);
 	int tplgraySize = tplgray.tellg();
 	tplgray.seekg(0, std::ios_base::beg);
