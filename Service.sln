@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "service", "srv\srv.vcxproj", "{B28609F4-FFFB-4FCA-BE39-05EFA404BFA9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcxproj", "{07945433-CC9D-441B-9D52-15920B6AE744}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clientDLL", "client\client.vcxproj", "{07945433-CC9D-441B-9D52-15920B6AE744}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dlltest", "Dlltest\Dlltest.vcxproj", "{2AB4A900-4535-4AA2-95BB-8F11914E952D}"
 EndProject

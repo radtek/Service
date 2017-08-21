@@ -76,8 +76,11 @@ int serviceService::getCCalibrationXYZFile(struct SOAP_ENC__base64 inFile, int &
 	if (WriteFile(inFile.__ptr, inFile.__size, "./ReceiveFile/Affine.xml")){
 		result = 10086;
 	}
-	else result = 10010;
-	return SOAP_OK;
+	else{
+		result = 10010;
+		std::cout << "write file failed!" << std::endl;
+	}
+		return SOAP_OK;	
 }
 
 int serviceService::CCalibrationXYZNewService(struct ns__CCalibrationXYZNewPARA inPara, struct ns__CCalibrationXYZNewOUT &outPara){

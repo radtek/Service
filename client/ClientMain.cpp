@@ -3,7 +3,6 @@
 
 #include "fstream"
 #include "iostream"
-//#include "include/SCUImage2/SCUImage.hpp"
 #include "ClientDll.h"
 
 
@@ -20,7 +19,7 @@ void sendFile(const char* endpoint, int& outResult){
 	int imgsize = img.tellg();
 	img.seekg(0, std::ios_base::beg);
 	_inPutFile.image.__size = imgsize;
-	_inPutFile.image.__ptr = new UCHAR[imgsize];
+	_inPutFile.image.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*imgsize);
 	img.read((char*)_inPutFile.image.__ptr, imgsize);
 	img.close();
 
@@ -30,7 +29,7 @@ void sendFile(const char* endpoint, int& outResult){
 	int img1size = img1.tellg();
 	img1.seekg(0, std::ios_base::beg);
 	_inPutFile.image2.__size = img1size;
-	_inPutFile.image2.__ptr = new UCHAR[img1size];
+	_inPutFile.image2.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*img1size);
 	img1.read((char*)_inPutFile.image2.__ptr, img1size);
 	img1.close();
 
@@ -40,7 +39,7 @@ void sendFile(const char* endpoint, int& outResult){
 	int img2size = img2.tellg();
 	img2.seekg(0, std::ios_base::beg);
 	_inPutFile.image3.__size = img2size;
-	_inPutFile.image3.__ptr = new UCHAR[img2size];
+	_inPutFile.image3.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*img2size);
 	img2.read((char*)_inPutFile.image3.__ptr, img2size);
 	img2.close();
 
@@ -50,7 +49,7 @@ void sendFile(const char* endpoint, int& outResult){
 	int matchTemPlateSize = matchTemPlate.tellg();
 	matchTemPlate.seekg(0, std::ios_base::beg);
 	_inPutFile.matchTemPlate.__size = matchTemPlateSize;
-	_inPutFile.matchTemPlate.__ptr = new UCHAR[matchTemPlateSize];
+	_inPutFile.matchTemPlate.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*matchTemPlateSize);
 	matchTemPlate.read((char*)_inPutFile.matchTemPlate.__ptr, matchTemPlateSize);
 	matchTemPlate.close();
 
@@ -60,7 +59,7 @@ void sendFile(const char* endpoint, int& outResult){
 	int tplgraySize = tplgray.tellg();
 	tplgray.seekg(0, std::ios_base::beg);
 	_inPutFile.tplgray.__size = tplgraySize;
-	_inPutFile.tplgray.__ptr = new UCHAR[tplgraySize];
+	_inPutFile.tplgray.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*tplgraySize);
 	tplgray.read((char*)_inPutFile.tplgray.__ptr, tplgraySize);
 	tplgray.close();
 
@@ -68,7 +67,7 @@ void sendFile(const char* endpoint, int& outResult){
 	outResult = 0;
 	if (proxy.getFileService(_inPutFile, i) == SOAP_OK)
 	{		
-		proxy.destroy();	
+		//proxy.destroy();	
 		if (i ==10086)
 		{
 			cout << "successful" << endl;
@@ -85,13 +84,9 @@ void sendFile(const char* endpoint, int& outResult){
 	else if (proxy.error)
 	{
 		proxy.soap_stream_fault(std::cerr);
-		proxy.destroy();
+		//
 	}
-	delete[] _inPutFile.image.__ptr;
-	delete[] _inPutFile.image2.__ptr;
-	delete[] _inPutFile.image3.__ptr;
-	delete[] _inPutFile.matchTemPlate.__ptr;
-	delete[] _inPutFile.tplgray.__ptr;
+	proxy.destroy();
 	return;
 }
 
@@ -102,13 +97,13 @@ void TempleMatch(const char* endpoint, unsigned char* imggray, int widthImg, int
 	TempleMatchPARA.heightImg = heightImg;
 	TempleMatchPARA.widthImg = widthImg;
 	TempleMatchPARA.imggray.__size = heightImg*widthImg;
-	TempleMatchPARA.imggray.__ptr = new unsigned char[TempleMatchPARA.imggray.__size];
+	TempleMatchPARA.imggray.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*heightImg*widthImg);
 	memcpy(TempleMatchPARA.imggray.__ptr, imggray, widthImg*heightImg);
 	ns__TempleMatchOUT result;
 
 	if (proxy.TempleMatchService(TempleMatchPARA, result) == SOAP_OK)
 	{
-		proxy.destroy();
+		//proxy.destroy();
 		memcpy(costs, &result.fcosts, sizeof(result.fcosts));
 		memcpy(CenterCoordsX, &result.fCenterCoordsX, sizeof(result.fCenterCoordsX));
 		memcpy(CenterCoordsY, &result.fCenterCoordsY, sizeof(result.fCenterCoordsY));
@@ -119,13 +114,13 @@ void TempleMatch(const char* endpoint, unsigned char* imggray, int widthImg, int
 	}
 	else if (proxy.error)
 	{
-		proxy.soap_stream_fault(std::cerr);
-		proxy.destroy();
+		proxy.soap_stream_fault(std::cerr);		
 		outResult = 0;
 	}
+	proxy.destroy();
 }
 
-void getAffine(const char* endpoint, const char* AffinePath, int& outResult){
+void sendAffineFile(const char* endpoint, const char* AffinePath, int& outResult){
 	serviceProxy proxy;
 	proxy.soap_endpoint = endpoint;
 	SOAP_ENC__base64 _inPutFile;
@@ -136,14 +131,13 @@ void getAffine(const char* endpoint, const char* AffinePath, int& outResult){
 	int AffineFileSize = AffineFile.tellg();
 	AffineFile.seekg(0, std::ios_base::beg);
 	_inPutFile.__size = AffineFileSize;
-	_inPutFile.__ptr = new UCHAR[AffineFileSize];
+	_inPutFile.__ptr = (UCHAR*)soap_malloc(&proxy, sizeof(UCHAR)*AffineFileSize);
 	AffineFile.read((char*)_inPutFile.__ptr, AffineFileSize);
 	AffineFile.close();
 	int i = 0;
 	outResult = 0;
 	if (proxy.getCCalibrationXYZFile(_inPutFile,i)==SOAP_OK)
-	{
-		proxy.destroy();
+	{		
 		if (i == 10086)
 		{
 			cout << "successful" << endl;
@@ -158,14 +152,14 @@ void getAffine(const char* endpoint, const char* AffinePath, int& outResult){
 	}
 	else if (proxy.error)
 	{
-		proxy.soap_stream_fault(std::cerr);
-		proxy.destroy();
+		proxy.soap_stream_fault(std::cerr);		
 	}
-	delete[] _inPutFile.__ptr;
+	proxy.destroy();
+	//delete[] _inPutFile.__ptr;
 	return;
 }
 
-void CCalibrationXYZNew(const char* endpoint, float* srcTriX, float* srcTriY, int number, float* CalibrationX, float* calibrationY,int& outResult){
+void CCalibrationXYZNew(const char* endpoint, float* srcTriX, float* srcTriY, int number, float* CalibrationX, float* CalibrationY, int& outResult){
 	serviceProxy proxy;
 	proxy.soap_endpoint = endpoint;
 	ns__CCalibrationXYZNewPARA _inPutPara;
@@ -180,15 +174,16 @@ void CCalibrationXYZNew(const char* endpoint, float* srcTriX, float* srcTriY, in
 	outResult = 0;
 	if (proxy.CCalibrationXYZNewService(_inPutPara,_outPara)==SOAP_OK)
 	{
-		proxy.destroy();
-		memcpy(CalibrationX, _outPara.CalibrationX, sizeof(_outPara.CalibrationX));
-		memcpy(calibrationY, _outPara.CalibrationY, sizeof(_outPara.CalibrationY));
+		//proxy.destroy();
+		memcpy(CalibrationX, &_outPara.CalibrationX, sizeof(_outPara.CalibrationX));
+		memcpy(CalibrationY, &_outPara.CalibrationY, sizeof(_outPara.CalibrationY));
 		outResult = 1;
 	}
 	else if (proxy.error){
 		proxy.soap_stream_fault(std::cerr);
-		proxy.destroy();
+		//proxy.destroy();
 	}
+	proxy.destroy();	
 	return ;
 }
 

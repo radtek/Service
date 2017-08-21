@@ -1,6 +1,0 @@
-LIBRARY
-EXPORTS; 
-sendFile; 
-TempleMatch; 
-getAffine;
-CCalibrationXYZNew;
