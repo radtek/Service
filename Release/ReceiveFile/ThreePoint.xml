@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<affMat type_id="opencv-matrix">
+  <rows>2</rows>
+  <cols>3</cols>
+  <dt>f</dt>
+  <data>
+    1.07788491e+000 -1.05738819e+000 -9.34582443e+001 -1.09694231e+000
+    1.61100514e-002 4.06218048e+002</data></affMat>
+</opencv_storage>
